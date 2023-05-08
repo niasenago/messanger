@@ -20,7 +20,7 @@ public class ClientHandler implements Runnable {
             this.clientUserName = bufferedReader.readLine();
 
             clientHandlers.add(this);
-            broadcastMessage("SERVER: " + clientUserName + "has joined the chat.");
+            broadcastMessage("SERVER: " + clientUserName + " has joined the chat.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class ClientHandler implements Runnable {
         String messageFromClient;
         while(clientSocket.isConnected()){
             try{
-                messageFromClient = bufferedReader.readLine();  //blocking operation
+                messageFromClient = bufferedReader.readLine();  //blocking operation // is waiting for the message
                 broadcastMessage(messageFromClient);
             } catch (IOException e) {
                 e.printStackTrace();
