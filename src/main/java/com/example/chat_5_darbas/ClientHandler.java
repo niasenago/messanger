@@ -43,6 +43,20 @@ public class ClientHandler implements Runnable {
         }
     }
     private void broadcastMessage(String message){
+        /*TODO change this code*/
+        String MESSAGE_FILE = "log.txt";
+
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(MESSAGE_FILE, true));
+            writer.write(message);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        /*TODO change this code*/
+
         for(ClientHandler clientHandler : clientHandlers){  //for each clientHandler in ArrayList clientHandlers
             try{
                 if(!clientHandler.clientUserName.equals(this.clientUserName)){
