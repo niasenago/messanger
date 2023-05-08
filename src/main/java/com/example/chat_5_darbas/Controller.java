@@ -20,8 +20,9 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            System.out.println("Server is running");
             server = new Server(new ServerSocket(PORT));
-            server.startServer();
+            server.startServer();   //blocking operation
 
         } catch (IOException e) {
             e.printStackTrace();
