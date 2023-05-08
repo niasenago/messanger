@@ -1,4 +1,4 @@
-#OOP 5 užduotis#  
+###OOP 5 užduotis###  
 1) sukurti kliento-serverio komunikaciją, kurios pagalba bus galima apsikeisti žinutėmis tarp skirtingų klientų.  
 2) galimybė sukurti kambarį (room).  
 3) galimybė keistis žinutėmis su visais vartotoais esančiais kambaryje(room).  
