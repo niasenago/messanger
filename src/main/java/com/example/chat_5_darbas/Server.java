@@ -10,10 +10,12 @@ public class Server {
     private Socket clientSocket;
     private ServerSocket serverSocket;
     private ArrayList<ClientHandler> clients;
-    private String logFileName = "roomLog.txt";
+    private String logFileName;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
+        logFileName = String.valueOf(serverSocket.getLocalPort());
+        logFileName = logFileName + "_room_log.txt";
     }
     public void startServer(){
         try{
