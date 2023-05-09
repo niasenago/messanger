@@ -1,10 +1,16 @@
 package com.example.chat_5_darbas;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class Client{
     private Socket clientSocket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
@@ -22,12 +28,11 @@ public class Client {
         }
     }
 
-    public void sendMessage(){
+    public void sendMessage(){//String messageToSend
         try{
             bufferedWriter.write(clientUserName);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
 
             /*TODO: change this to textfield*/
             Scanner scanner = new Scanner(System.in);
@@ -44,7 +49,7 @@ public class Client {
         }
     }
 
-    public void listenForMessage(){
+    public void listenForMessage(){     //receiveMessageFromServer
         new Thread(new Runnable() {     //mes tiesiog sukuriame ogjekta Thread ir paleidziame
             @Override
             public void run() {         /** what is inside method run will be executed on separete thread*/
@@ -52,6 +57,7 @@ public class Client {
                 while(clientSocket.isConnected()){
                     try{
                         messageFromGroupChat = bufferedReader.readLine();
+                        //ClientController.addLabel(messageFromGroupChat, vbox);//i added this
                         System.out.println(messageFromGroupChat);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -89,6 +95,6 @@ public class Client {
         Client client = new Client(socket, username);
         client.listenForMessage();  //infinite loop on separete threads
         client.sendMessage();       //infinite loop on separete threads
-
     }
+
 }

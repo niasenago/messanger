@@ -1,19 +1,26 @@
 package com.example.chat_5_darbas;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientMain {
-    public static void ClientMain(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username for the group chat: ");
-        String username = scanner.nextLine();
+public class ClientMain extends Application {
 
-        Socket socket = new Socket("localhost", 4444);
-        Client client = new Client(socket, username);
-        client.listenForMessage();  //infinite loop on separete threads
-        client.sendMessage();       //infinite loop on separete threads
 
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientMain.class.getResource("Client.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Client!");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public static void main(String[] args) {
+        launch();
     }
 }

@@ -10,6 +10,7 @@ public class Server {
     private Socket clientSocket;
     private ServerSocket serverSocket;
     private ArrayList<ClientHandler> clients;
+    private String logFileName = "roomLog.txt";
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -19,7 +20,7 @@ public class Server {
             while(!serverSocket.isClosed()){
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("A new client has connected!");
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                ClientHandler clientHandler = new ClientHandler(clientSocket, logFileName);
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
