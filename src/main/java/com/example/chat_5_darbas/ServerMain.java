@@ -6,19 +6,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 
-public class ServerMain extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ServerMain.class.getResource("Server.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Server");
-        stage.setScene(scene);
-        stage.show();
-    }
-
+public class ServerMain{
+    private static Server server;
+    private static final int PORT = 4444; //scan this port from user to create N rooms
     public static void main(String[] args) {
+        System.out.println("Server port: " + PORT);
+        try {
+            System.out.println("Server is running");
+            server = new Server(new ServerSocket(PORT));
+            server.startServer();   //"endless" while loop blocking operation
 
-        launch();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Could not create server");
+        }
     }
 }

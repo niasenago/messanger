@@ -10,7 +10,7 @@ public class ClientHandler implements Runnable {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUserName;
-    private  String LOG_FILE;
+    private  String LOG_FILE_NAME;
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();//fiksuojame visus naujus klientus
     public ClientHandler(Socket clientSocket, String logFileName) {
         try{
@@ -18,7 +18,7 @@ public class ClientHandler implements Runnable {
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())); // mes siunciam klientui
             this.bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //klientas mums siuncia
             this.clientUserName = bufferedReader.readLine();
-            this.LOG_FILE = logFileName;
+            this.LOG_FILE_NAME = logFileName;
             clientHandlers.add(this);
             broadcastMessage("SERVER: " + clientUserName + " has joined the chat.");
         } catch (IOException e) {
@@ -44,11 +44,10 @@ public class ClientHandler implements Runnable {
     }
     private void broadcastMessage(String message){
         /*TODO change this code*/
-        //String MESSAGE_FILE = "log.txt";
 
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(LOG_FILE, true));
+            writer = new BufferedWriter(new FileWriter(LOG_FILE_NAME, true));
             writer.write(message);
             writer.newLine();
             writer.close();
@@ -63,7 +62,7 @@ public class ClientHandler implements Runnable {
         //delete Name: part of string
         int colonIndex = sentMessage.indexOf(":");
         sentMessage = colonIndex != -1 ? sentMessage.substring(colonIndex + 1).trim() : sentMessage.trim();
-        if(sentMessage.startsWith("@")){
+        if(sentMessage.startsWith("@")){    //send message to only one client
             System.out.println("dm work");
             parts = sentMessage.split("@", 2);
             name = parts[1].trim();
@@ -83,6 +82,7 @@ public class ClientHandler implements Runnable {
                 }
             }
         }else{
+            //sent message to all clients
             for(ClientHandler clientHandler : clientHandlers){  //for each clientHandler in ArrayList clientHandlers
                 try{
                     if(!clientHandler.clientUserName.equals(this.clientUserName)){
