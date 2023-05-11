@@ -13,12 +13,13 @@ public class ClientHandler implements Runnable {
     private String clientUserName;
     private  String LOG_FILE_NAME;
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();//fiksuojame visus naujus klientus
-    public ClientHandler(Socket clientSocket, String logFileName) {
+    public ClientHandler(Socket clientSocket, String logFileName) {//TODO: change this add clientusername
         try{
             this.clientSocket = clientSocket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())); // mes siunciam klientui
             this.bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //klientas mums siuncia
-            this.clientUserName = bufferedReader.readLine();
+            //System.out.println(this.clientUserName);
+            this.clientUserName = bufferedReader.readLine(); // TODO: change this
             this.LOG_FILE_NAME = logFileName;
             clientHandlers.add(this);
             broadcastMessage("SERVER: " + clientUserName + " has joined the chat.");
@@ -30,12 +31,13 @@ public class ClientHandler implements Runnable {
     }
 
     @Override
-    public void run() {                                         //listens for the message from client
+    public void run() {     //thread.start();                                    //listens for the message from client
         String messageFromClient;
         while(clientSocket.isConnected()){
             try{
                 messageFromClient = bufferedReader.readLine();  //blocking operation // is waiting for the message
                 broadcastMessage(messageFromClient);
+                System.out.println("client handler listen works. it received message");
             } catch(SocketException e){
                 e.printStackTrace();
                 closeEverything(clientSocket, bufferedReader, bufferedWriter);
@@ -48,7 +50,7 @@ public class ClientHandler implements Runnable {
         }
     }
     private void broadcastMessage(String message){
-        /**TODO change this code*/
+
         /**Well it works so do not change this**/
         BufferedWriter writer = null;
         try {
@@ -57,7 +59,7 @@ public class ClientHandler implements Runnable {
             writer.newLine();
             writer.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         /**TODO change this code*/
 

@@ -76,7 +76,7 @@ public class ClientController implements Initializable {
                     hbox.getChildren().add(textFlow);
                     vbox_messages.getChildren().add(hbox);
 
-                    client.sendMessage();//messageToSend
+                    client.sendMessage(messageToSend);//messageToSend
                     tf_message.clear();
                 }
             }

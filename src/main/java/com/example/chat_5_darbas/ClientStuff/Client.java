@@ -9,6 +9,7 @@ public class Client{
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUserName;
+    private int nameCounter = 0;
 
     public Client(Socket clientSocket,String clientUserName) {
         try {
@@ -22,20 +23,18 @@ public class Client{
         }
     }
 
-    public void sendMessage(){//String messageToSend
+    public void sendMessage(String messageToSend){//String messageToSend
         try{
-            bufferedWriter.write(clientUserName);
+            System.out.println("sendMessage method works");
+            if(nameCounter ==0)
+                bufferedWriter.write(clientUserName);
+            nameCounter++;
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
-            /*TODO: change this to textfield*/
-            Scanner scanner = new Scanner(System.in);
-            while(clientSocket.isConnected()){
-                String messageToSend = scanner.nextLine();
-                bufferedWriter.write(clientUserName + ": " + messageToSend);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-            }
+            bufferedWriter.write(clientUserName + ": " + messageToSend);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +87,7 @@ public class Client{
         Socket socket = new Socket("localhost", 4444);
         Client client = new Client(socket, username);
         client.listenForMessage();  //infinite loop on separete threads
-        client.sendMessage();       //infinite loop on separete threads
+        //client.sendMessage();       //infinite loop on separete threads
     }
 
 }

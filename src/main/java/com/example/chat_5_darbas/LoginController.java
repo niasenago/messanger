@@ -1,40 +1,54 @@
 package com.example.chat_5_darbas;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 public class LoginController {
     @FXML
     private TextField nameTF, portTF;
 
+
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    public LoginController() {
+    }
+
     public void login(ActionEvent event){
         try {
+            //System.out.println(this.toString());
 
             String username = nameTF.getText();
             int port = Integer.parseInt(portTF.getText());
 
             System.out.println("login scene name = " + username + " PORT: " + port);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MessangerScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomScene.fxml"));
             root = loader.load();
             MessangerController messangerController = loader.getController();
             messangerController.setUserName(username);
+            messangerController.setPORT(port);
 
 
-            //root = FXMLLoader.load(getClass().getResource("MessangerScene.fxml"));
             stage = (Stage)((Node)event.getSource() ).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -44,4 +58,5 @@ public class LoginController {
             ex.printStackTrace();
         }
     }
+
 }

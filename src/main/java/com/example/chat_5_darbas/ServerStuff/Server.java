@@ -24,8 +24,8 @@ public class Server {
                 System.out.println("A new client has connected!");
                 ClientHandler clientHandler = new ClientHandler(clientSocket, logFileName);
 
-                Thread thread = new Thread(clientHandler);
-                thread.start();                         //listens for the message from client
+                Thread thread = new Thread(clientHandler); //clientHandler is expected to be an implementation of the Runnable interface
+                thread.start();                         //listens for the message from client ; calls the run() method of the Runnable
             }
         } catch (IOException e) {
             e.printStackTrace();
