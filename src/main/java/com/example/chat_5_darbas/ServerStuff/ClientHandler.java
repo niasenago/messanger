@@ -1,7 +1,8 @@
-package com.example.chat_5_darbas;
+package com.example.chat_5_darbas.ServerStuff;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class ClientHandler implements Runnable {
@@ -29,12 +30,16 @@ public class ClientHandler implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run() {                                         //listens for the message from client
         String messageFromClient;
         while(clientSocket.isConnected()){
             try{
                 messageFromClient = bufferedReader.readLine();  //blocking operation // is waiting for the message
                 broadcastMessage(messageFromClient);
+            } catch(SocketException e){
+                e.printStackTrace();
+                closeEverything(clientSocket, bufferedReader, bufferedWriter);
+                break;
             } catch (IOException e) {
                 e.printStackTrace();
                 closeEverything(clientSocket, bufferedReader, bufferedWriter);
@@ -43,8 +48,8 @@ public class ClientHandler implements Runnable {
         }
     }
     private void broadcastMessage(String message){
-        /*TODO change this code*/
-
+        /**TODO change this code*/
+        /**Well it works so do not change this**/
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(LOG_FILE_NAME, true));
@@ -54,7 +59,7 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        /*TODO change this code*/
+        /**TODO change this code*/
 
         String[] parts;
         String name;
@@ -62,12 +67,12 @@ public class ClientHandler implements Runnable {
         //delete Name: part of string
         int colonIndex = sentMessage.indexOf(":");
         sentMessage = colonIndex != -1 ? sentMessage.substring(colonIndex + 1).trim() : sentMessage.trim();
-        if(sentMessage.startsWith("@")){    //send message to only one client
+        if(sentMessage.startsWith("@")){                        //send message to only one client
             System.out.println("dm work");
             parts = sentMessage.split("@", 2);
             name = parts[1].trim();
             sentMessage = parts[0].trim();
-            name = name.split(" ", 2)[0]; // delete message part of string from name
+            name = name.split(" ", 2)[0];           // delete message part of string from name
 
             for(ClientHandler clientHandler: clientHandlers){
                 try{
@@ -82,8 +87,7 @@ public class ClientHandler implements Runnable {
                 }
             }
         }else{
-            //sent message to all clients
-            for(ClientHandler clientHandler : clientHandlers){  //for each clientHandler in ArrayList clientHandlers
+            for(ClientHandler clientHandler : clientHandlers){  //sent message to all clients ;for each clientHandler in ArrayList clientHandlers
                 try{
                     if(!clientHandler.clientUserName.equals(this.clientUserName)){
                         clientHandler.bufferedWriter.write(message);
@@ -96,14 +100,11 @@ public class ClientHandler implements Runnable {
                 }
             }
         }
-
-
-
     }
 
     private void removeClientHandler(){
         clientHandlers.remove(this);
-        broadcastMessage("SERVER: " + clientUserName + "has left the chat.");
+        broadcastMessage("SERVER: " + clientUserName + " has left the chat.");
     }
     private void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter){
         removeClientHandler();

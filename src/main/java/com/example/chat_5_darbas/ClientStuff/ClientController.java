@@ -1,4 +1,4 @@
-package com.example.chat_5_darbas;
+package com.example.chat_5_darbas.ClientStuff;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class ClientController implements Initializable {
     @FXML

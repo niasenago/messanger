@@ -1,4 +1,4 @@
-package com.example.chat_5_darbas;
+package com.example.chat_5_darbas.ServerStuff;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -25,7 +25,7 @@ public class Server {
                 ClientHandler clientHandler = new ClientHandler(clientSocket, logFileName);
 
                 Thread thread = new Thread(clientHandler);
-                thread.start();
+                thread.start();                         //listens for the message from client
             }
         } catch (IOException e) {
             e.printStackTrace();

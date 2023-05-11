@@ -1,10 +1,4 @@
-package com.example.chat_5_darbas;
-
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+package com.example.chat_5_darbas.ClientStuff;
 
 import java.io.*;
 import java.net.Socket;
