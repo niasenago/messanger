@@ -1,5 +1,7 @@
 package com.example.chat_5_darbas.ClientStuff;
 
+import com.example.chat_5_darbas.RoomController;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -25,7 +27,7 @@ public class Client{
 
     public void sendMessage(String messageToSend){//String messageToSend
         try{
-            System.out.println("sendMessage method works");
+            //System.out.println("sendMessage method works");
             if(nameCounter ==0)
                 bufferedWriter.write(clientUserName);
             nameCounter++;
@@ -51,6 +53,7 @@ public class Client{
                     try{
                         messageFromGroupChat = bufferedReader.readLine();
                         //ClientController.addLabel(messageFromGroupChat, vbox);//i added this
+                        RoomController.addStringToTable(messageFromGroupChat);
                         System.out.println(messageFromGroupChat);
                     } catch (IOException e) {
                         e.printStackTrace();

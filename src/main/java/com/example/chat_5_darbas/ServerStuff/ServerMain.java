@@ -8,7 +8,7 @@ import java.util.Scanner;
  * */
 public class ServerMain{
     private static Server server;
-    private static int PORT = 4444;          /** TODO: scan this port from user to create N rooms*/
+    private static int PORT = 4444;          //default port
     public static void main(String[] args) {
 
         System.out.println("Input port number: ");

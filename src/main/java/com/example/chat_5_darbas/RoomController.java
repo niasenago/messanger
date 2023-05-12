@@ -17,7 +17,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MessangerController implements Initializable {
+public class RoomController implements Initializable {
     @FXML
     private Label nameLbl, roomLbl;
     @FXML
@@ -81,15 +81,16 @@ public class MessangerController implements Initializable {
 
     }
     public void send(ActionEvent e){
-        System.out.println("send btn works");
+        //System.out.println("send btn works");
         String messageToSend = messageTF.getText();
+        System.out.println(messageToSend);      /**TODO*/
         if(!messageToSend.isEmpty()){
             client.sendMessage(messageToSend);//messageToSend
             messageTF.clear();
         }
     }
     public static void addStringToTable(String msgFromServer){
-        System.out.println("add string to table works");
+        System.out.println("add string to the table works");
         /**TODO*/
     }
 
